@@ -8,8 +8,8 @@ function App() {
   return (
     <div
       className="App"
-      css={css`
-        max-width: 1024px;
+      css={css`!
+        max-width: 1024px;!
         margin: 0 auto;
         padding-top: 1rem;
       `}
