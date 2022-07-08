@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 /** @jsxImportSource @emotion/react */
 
+import React, { useRef, useState } from 'react'
 import { css } from "@emotion/react";
+import { useIntersection } from './ImageIntersection';
 
 type ImgElementProps = {
   src: string;
@@ -11,12 +13,32 @@ type ImgElementProps = {
 interface ImageProps extends ImgElementProps { }
 
 export default function Image(props: ImageProps): JSX.Element {
+  const [isInView, setIsInView] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+  useIntersection(imageRef, () => {
+    setIsInView(true);
+  });
   return (
-    <img
-      {...props}
+    <div
+      ref={imageRef}
       css={css`
-        max-width: 100%;
+      background-color: #ccc;
+      overflow: hidden;
+      position: relative;
+      max-width: 800px;
+      margin: 20px auto;
+      height:500px;
       `}
-    />
+    >
+      {isInView && (
+        <img
+          {...props}
+          css={css`
+          width: 100%;
+          height:100%;
+          `}
+        />
+      )}
+    </div >
   );
 }
