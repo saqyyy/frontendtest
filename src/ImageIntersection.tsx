@@ -21,20 +21,20 @@ function handleIntersections(entries: {
     });
 }
 
-function getIntersectionObserver() {
+function getIntersectionObserver(threshold?: number) {
     if (observer === undefined) {
         observer = new IntersectionObserver(handleIntersections, {
             rootMargin: '100px',
-            threshold: 0.9 as number,
+            threshold: threshold || 0.9,
         });
     }
     return observer;
 }
 
-export function useIntersection(elem: any, callback: () => void) {
+export function useIntersection(elem: any, callback: () => void, threshold?: number) {
     useEffect(() => {
         let target = elem.current;
-        let observer = getIntersectionObserver();
+        let observer = getIntersectionObserver(threshold);
         listenerCallbacks.set(target, callback);
         observer.observe(target);
 
@@ -42,5 +42,5 @@ export function useIntersection(elem: any, callback: () => void) {
             listenerCallbacks.delete(target);
             observer.unobserve(target);
         };
-    }, [elem, callback]);
+    }, [elem, callback, threshold]);
 }

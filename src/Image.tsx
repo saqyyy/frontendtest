@@ -10,17 +10,21 @@ type ImgElementProps = {
   alt?: string;
 }; // FIXME
 
-interface ImageProps extends ImgElementProps { }
+interface ImageProps extends ImgElementProps {
+  threshold?: number;
+  loadingIcon?: React.ReactNode;
+}
 
 export default function Image(props: ImageProps): JSX.Element {
   const [isInView, setIsInView] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   useIntersection(imageRef, () => {
     setIsInView(true);
-  });
+  }, props.threshold);
   return (
     <div
       ref={imageRef}
+      id={`${!isInView && 'iconCentered'}`}
       css={css`
       background-color: #ccc;
       overflow: hidden;
@@ -39,6 +43,7 @@ export default function Image(props: ImageProps): JSX.Element {
           `}
         />
       )}
+      {!isInView && props.loadingIcon}
     </div >
   );
 }
