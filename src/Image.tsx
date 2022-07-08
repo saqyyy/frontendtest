@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 /** @jsxImportSource @emotion/react */
 
-import React, { useRef, useState } from 'react'
+import React, { DetailedHTMLProps, ImgHTMLAttributes, useRef, useState } from 'react'
 import { css } from "@emotion/react";
 import { useIntersection } from './ImageIntersection';
 
-type ImgElementProps = {
-  src: string;
-  alt?: string;
-}; // FIXME
+type ImgElementProps = DetailedHTMLProps<
+  ImgHTMLAttributes<HTMLImageElement>,
+  HTMLImageElement
+>; // FIXME
 
 interface ImageProps extends ImgElementProps {
   threshold?: number;

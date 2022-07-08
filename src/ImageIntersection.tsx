@@ -21,7 +21,7 @@ function handleIntersections(entries: {
     });
 }
 
-function getIntersectionObserver(threshold?: number) {
+export function getIntersectionObserver(threshold?: number) {
     if (observer === undefined) {
         observer = new IntersectionObserver(handleIntersections, {
             rootMargin: '100px',
