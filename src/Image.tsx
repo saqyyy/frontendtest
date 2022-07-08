@@ -17,9 +17,11 @@ interface ImageProps extends ImgElementProps {
 
 export default function Image(props: ImageProps): JSX.Element {
   const [isInView, setIsInView] = useState(false);
+  const [isFade, setIsFade] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
   useIntersection(imageRef, () => {
     setIsInView(true);
+    if (isInView) setIsFade(true);
   }, props.threshold);
   return (
     <div
@@ -41,6 +43,7 @@ export default function Image(props: ImageProps): JSX.Element {
           width: 100%;
           height:100%;
           `}
+          id={`${isFade ? 'fadeIn' : 'fadeOut'}`}
         />
       )}
       {!isInView && props.loadingIcon}
